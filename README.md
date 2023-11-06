@@ -19,8 +19,9 @@ de forma vertical.
 
 ## Crear un Fragment
 
-Para añadir Fragments al proyecto, hay que añadir las siguientes dependencias en build.gradle a
-nivel de módulo (app).
+No hace falta añadir ninguna dependencia para tener acceso a los fragmentos del paquete androidX
+pero si es recomendable añadir funciones extras sobre fragmentos a través de la siguiente
+librería:
 
 ```
     val fragment_version = "1.6.2"
@@ -54,12 +55,12 @@ que se usen en la app.
 
 Cada pantalla que se desarrolle será un Fragment. **El Fragment lleva asociado: un ViewModel.**
 
-**Es muy importante tener claro cada una de las llamadas que tiene un Fragment para saber dónde se
+**Es muy importante** tener claro cada una de las llamadas que tiene un Fragment para saber dónde se
 tienen que inicializar cada uno de las funcionalidades: ViewModel, Observers, etc.
 
 ![](/assets/fragment-view-lifecycle.png)
 
-**Iniciar Hilt**
+### 1. Iniciar Hilt
 
 Para usar Hilt en un fragment hay que añadir la anotación:
 
@@ -70,7 +71,8 @@ class OffersListFragment : Fragment() {
 }
 ```
 
-**Iniciar ViewBinding**
+### 2. Iniciar ViewBinding
+
 Es importante tener en cuenta cuando hay que crear el viewBinding y cómo hay que liberarlo
 estableciendolo a null.
 
@@ -94,7 +96,8 @@ estableciendolo a null.
     }
 ```
 
-**Configurar la vista (setupView)**
+### 3. Configurar la vista (setupView)
+
 Si queremos personalizar la vista añadiendo eventos sobre algunos de los elementos de la interfaz de
 usuario, debemos hacerlo en el método del ciclo de vida adecuado.
 
@@ -112,7 +115,7 @@ usuario, debemos hacerlo en el método del ciclo de vida adecuado.
     }
 ```
 
-**Crear el observer para comunicar el ViewModel y el Fragment**
+### 4. Crear el observer para comunicar el ViewModel y el Fragment
 
 El observer se usa y se crea igual que se hace en un Activity. Lo único que cambia es el ciclo de
 vida que se usa en los Fragments:
@@ -134,4 +137,3 @@ vida que se usa en los Fragments:
 ## Bibliografía
 
 - [Página Web Oficial Android](https://developer.android.com/guide/fragments)
-- 
