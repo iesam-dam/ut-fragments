@@ -12,6 +12,8 @@ import com.iesam.utfragments.R
 import com.iesam.utfragments.databinding.FragmentExampleDetailBinding
 import com.iesam.utfragments.list.ExampleListFragment
 
+private const val ARG_PARAM1 = "param1"
+
 class ExampleDetailFragment : Fragment() {
 
     private var _binding: FragmentExampleDetailBinding? = null
@@ -28,6 +30,8 @@ class ExampleDetailFragment : Fragment() {
         setupView()
         return binding.root
     }
+
+    private fun getParams(): String = arguments?.getString(ARG_PARAM1) ?: ""
 
     private fun setupView() {
         binding.apply {
@@ -88,6 +92,11 @@ class ExampleDetailFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance() = ExampleDetailFragment()
+        fun newInstance(param1: String) =
+            ExampleDetailFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                }
+            }
     }
 }

@@ -36,7 +36,7 @@ class ExampleListFragment : Fragment() {
     private fun setupView() {
         binding.apply {
             actionChangeFragment.setOnClickListener {
-                (activity as MainActivity).changeFragment(ExampleDetailFragment.newInstance())
+                (activity as MainActivity).changeFragment(ExampleDetailFragment.newInstance("1"))
             }
             layoutList.toolbar.apply {
                 //Establecemos el título por programación
