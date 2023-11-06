@@ -44,6 +44,21 @@ En el layout del Activity, hay que añadir un **FragmentContainerView** e indica
 
 Estas clases **no son registradas** en el fichero AndroidManifest.xml.
 
+Para cargar cualquier otro fragmento en el FragmentContainerView debemos:
+
+```
+    fun changeFragment(fragment: Fragment) {
+        supportFragmentManager.commit {
+            replace(R.id.fragment_container, fragment)
+            setReorderingAllowed(true)
+            addToBackStack(null)
+        }
+    }
+```
+
+Donde el ``R.id.fragment_container`` el el FragmentContainerView y el ``fragment``es una instancia
+del fragmento que queremos cargar. Este fragmento reemplazará al fragmento anterior.
+
 ## Ciclo de Vida de un Fragment
 
 Los fragmentos tienen un ciclo de vida propio que depende del ciclo de vida contenedor (Activity u
@@ -131,6 +146,74 @@ vida que se usa en los Fragments:
           ...
         }
         viewModel.uiState.observe(viewLifecycleOwner, observer)
+    }
+```
+
+### 5. Personalizar la Toolbar
+
+La toolbar se añade en la vista que usa el fragmento así podremos tener una toolbar personalizada
+por cada fragmento. Al usar el mismo layout de la toolbar en varios fragmentos, debemos
+personalizarla por programación.
+
+Ejemplo: Vamos a establecer el título, un menú y las acciones por cada uno de los items que tiene el
+menú.
+
+```
+  layoutList.toolbar.apply {
+      //Establecemos el título por programación
+      title = getString(R.string.fragment_list_title)
+  
+      //Inflamos|Añadimos el menú por programación.
+      inflateMenu(R.menu.menu_list)
+  
+      //Añadimos los eventos a los botones del menú
+      setOnMenuItemClickListener {
+          when (it.itemId) {
+              R.id.action_favorite -> {
+                  //Ejecutamos una acción
+                  showFavoriteItems()
+                  //Siempre hay que devolver true para que quede pulsado
+                  true
+              }
+  
+              R.id.action_delete -> {
+                  deleteItems()
+                  //Siempre hay que devolver true para que quede pulsado
+                  true
+              }
+  
+              else -> false
+          }
+      }
+  }
+```
+
+Si queremos manipular el menú una vez cargado, por ejemplo, para mostrar diferentes estados de un
+icono que acabamos de pulsar (favorito/no favorito) podemos hacerlo de la siguiente forma:
+
+```
+    private fun hideMenuItem() {
+        val itemFavorite = binding.layoutList.toolbar.menu.findItem(R.id.action_favorite)
+        itemFavorite.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_favorite_fill)
+    }
+```
+
+### 6. Acceder a la Activity
+
+Si queremos acceder al Actitity que ha cargado el fragment, se haría de la siguiente forma:
+
+```
+    //Tendríamos que hacer un casting, con el riesgo que conlleva.
+    private fun executeFunctionInActivity() {
+        (activity as MainActivity).showMessage()
+    }
+```
+
+Otro ejemplo es:
+
+```
+    actionChangeFragment.setOnClickListener {
+        (activity as MainActivity).changeFragment(ExampleDetailFragment.newInstance())
     }
 ```
 

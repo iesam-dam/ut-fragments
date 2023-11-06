@@ -49,7 +49,7 @@ class ExampleListFragment : Fragment() {
                 setOnMenuItemClickListener {
                     when (it.itemId) {
                         R.id.action_favorite -> {
-                            //Mostramos un mensaje
+                            //Ejecutamos una acción
                             showFavoriteItems()
                             //Siempre hay que devolver true para que quede pulsado
                             true
