@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">UTFragments</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_action_favorite">Ver Favoritos</string>
+    <string name="label_action_delete">Eliminar</string>
+    <string name="label_action_add">Añadir</string>
+    <string name="fragment_list_title">Fragmento Listado</string>
+    <string name="action_change_to_fragment_list">Cargar Fragmento Listado</string>
+    <string name="action_change_to_fragment_detail">Cargar Fragmento Detalle</string>
+    <string name="fragment_detail_title">Fragmento Detalle</string>
+</resources>
